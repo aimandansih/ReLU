@@ -1,30 +1,52 @@
+
 import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
 
-st.set_page_config(page_title="ReLU Activation Function")
+st.set_page_config(
+    page_title="ReLU Activation Function",
+    layout="wide"
+)
 
 st.title("ReLU Activation Function")
-st.write("Visualisation of the Rectified Linear Unit (ReLU).")
+
+st.write(
+    "Visualisation of Rectified Linear Unit (ReLU)"
+)
+
+# Mathematical formula
+st.subheader("Mathematical Formula")
+st.latex(r"f(x) = \max(0,x)")
 
 # Generate input values
 x = np.linspace(-6, 6, 400)
 
-# ReLU function
-y = np.maximum(0, x)
+# ReLU activation function
+def relu(x):
+    return np.maximum(0, x)
 
-# Plot graph
-fig, ax = plt.subplots()
-ax.plot(x, y, label="ReLU", linewidth=2)
-ax.axhline(0, color="black", linewidth=0.5)
-ax.axvline(0, color="black", linewidth=0.5)
+y = relu(x)
 
-ax.set_title("ReLU Activation Function")
-ax.set_xlabel("Input (x)")
-ax.set_ylabel("Output f(x)")
-ax.grid(True)
-ax.legend()
+# Create dataframe
+df = pd.DataFrame({
+    "Input (x)": x,
+    "ReLU Output": y
+})
 
-st.pyplot(fig)
+# Display graph
+st.subheader("ReLU Activation Function Graph")
 
-st.write("Formula: f(x) = max(0, x)")
+st.line_chart(
+    df.set_index("Input (x)")
+)
+
+# Explanation
+st.subheader("Explanation")
+
+st.write("""
+The ReLU activation function converts negative input
+values into zero while maintaining positive input values.
+
+ReLU is commonly used in hidden layers of neural networks
+because it is computationally efficient.
+""")
